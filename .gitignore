@@ -1,3 +1,5 @@
 .venv
 extracted_glyphs/*
 unicode
+unicode_150
+*.zip
