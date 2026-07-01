@@ -1,0 +1,11 @@
+[project]
+name = "unicode17"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "frontend>=0.0.3",
+    "pillow>=11.3.0",
+    "pymupdf>=1.26.5",
+]
