@@ -29,30 +29,18 @@ def get_all_unicodes():
 
 def get_unicode_x_list(col_count):
     if col_count == 3:
-        list1 = [
-            368.94000244140625,
-            220.13999938964844,
-            71.33999633789062,
-            103.26000213623047,
-            252.05999755859375,
-            400.8599853515625,
-        ]
+        list1 = [87.30000305175781, 236.10000610351562, 384.8999938964844]
     elif col_count == 2:
         list1 = [87.30000305175781, 310.5, 504.9599914550781]
     elif col_count == 4:
-        list1 = [
-            103.26000213623047,
-            214.86000061035156,
-            326.4599914550781,
-            438.05999755859375,
-        ]
-        list2 = [
-            71.33999633789062,
-            182.94000244140625,
-            294.5400085449219,
-            406.1400146484375,
-        ]
-        list1.extend(list2)
+        list1 = [87.30000305175781, 198.89999389648438, 310.5, 422.1000061035156]
+        # list2 = [
+        #     71.33999633789062,
+        #     182.94000244140625,
+        #     294.5400085449219,
+        #     406.1400146484375,
+        # ]
+        # list1.extend(list2)
 
     return list1
 
@@ -119,7 +107,7 @@ def get_dynamic_unicode_x_coords(char_data, unicodes):
     return matched_bboxes, sorted_x_coords
 
 
-def get_unicode_x_coords(pdf_path="./unicode_charts/U4E00.pdf"):
+def get_unicode_x_coords(pdf_path="./unicode_charts/U323B0.pdf"):
     pdf_document = fitz.open(pdf_path)
     for page_num in range(len(pdf_document)):
         if page_num < 1:
@@ -137,7 +125,7 @@ def get_unicode_x_coords(pdf_path="./unicode_charts/U4E00.pdf"):
         print(f"Page {page_num + 1}: Unicode X Coordinates: {unicode_x_list}")
 
 
-def get_character_coordinates(pdf_path="./unicode_charts/U4E00.pdf"):
+def get_character_coordinates(pdf_path="./unicode_charts/U323B0.pdf"):
     pdf_document = fitz.open(pdf_path)
     # 获取文件名（含扩展名）
     filename_with_ext = os.path.basename(pdf_path)  # "report.pdf"
@@ -153,6 +141,7 @@ def get_character_coordinates(pdf_path="./unicode_charts/U4E00.pdf"):
         "U2EBF0",
         "U30000",
         "U31350",
+        "U323B0",
     ]:
         m = 4
     elif pdf_name in ["U2F800", "U3400", "UF900"]:
@@ -167,8 +156,8 @@ def get_character_coordinates(pdf_path="./unicode_charts/U4E00.pdf"):
         if page_num < 1:
             continue
 
-        if page_num >= 2:
-            break
+        # if page_num >= 2:
+        #     break
 
         page = pdf_document.load_page(page_num)
 
@@ -300,7 +289,7 @@ def get_character_coordinates(pdf_path="./unicode_charts/U4E00.pdf"):
                                             y0 = char["y"] + char["h"]
 
                             next_span_y1 = span["next_span"]["bbox"][1]
-                            y1 = next_span_y1 + 0.9
+                            y1 = next_span_y1 + 0.2
                             w = x1 - x0
                             h = y1 - y0
                             if h < 18:
@@ -408,7 +397,7 @@ def get_chars3():
         results = get_character_coordinatesw2(pdf_path)
 
 
-def get_character_coordinatesw2(pdf_path):
+def get_character_coordinatesw2(pdf_path="./unicode_charts/U31C0.pdf"):
     pdf_document = fitz.open(pdf_path)
     # 获取文件名（含扩展名）
     filename_with_ext = os.path.basename(pdf_path)  # "report.pdf"
@@ -417,13 +406,13 @@ def get_character_coordinatesw2(pdf_path):
     pdf_name = os.path.splitext(filename_with_ext)[0]  # "report"
 
     if pdf_name == "U2E80":
-        unicode_x_range = range(204, 427)
+        unicode_x_range = range(189, 379)
     elif pdf_name == "U2F00":
-        unicode_x_range = range(78, 490)
+        unicode_x_range = range(94, 473)
     elif pdf_name == "U2FF0":
-        unicode_x_range = range(204, 205)
+        unicode_x_range = range(188, 189)
     elif pdf_name == "U31C0":
-        unicode_x_range = range(252, 316)
+        unicode_x_range = range(268, 331)
     codes = []
     unicodes = get_all_unicodes()
     for page_num in range(len(pdf_document)):
