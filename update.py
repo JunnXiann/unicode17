@@ -2,7 +2,7 @@ def append_extension_j(txt_path="./unicodes.txt"):
     # Define the range and starting ID
     start_hex = 0x323B0
     end_hex = 0x33479
-    start_id = 97674  # Starts right after your last ID (97673)
+    start_id = 99067  # Starts right after your last ID (97673)
     block_name = "CJK Unified Ideographs Extension J"
 
     # Open the file in append mode ('a') with UTF-8 encoding
