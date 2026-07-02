@@ -107,10 +107,13 @@ def get_dynamic_unicode_x_coords(char_data, unicodes):
     return matched_bboxes, sorted_x_coords
 
 
-def get_unicode_x_coords(pdf_path="./unicode_charts/U323B0.pdf"):
+def get_unicode_x_coords(pdf_path="./unicode_charts/U2A700.pdf"):
     pdf_document = fitz.open(pdf_path)
     for page_num in range(len(pdf_document)):
-        if page_num < 1:
+        # if page_num < 1:
+        #     continue
+
+        if page_num != 54:
             continue
 
         page = pdf_document.load_page(page_num)
@@ -125,7 +128,35 @@ def get_unicode_x_coords(pdf_path="./unicode_charts/U323B0.pdf"):
         print(f"Page {page_num + 1}: Unicode X Coordinates: {unicode_x_list}")
 
 
-def get_character_coordinates(pdf_path="./unicode_charts/U323B0.pdf"):
+def append_single_missing_unicode(character, hex_str, block_name="CJK Extension C", txt_path="./unicodes.txt"):
+    """
+    Finds the last auto-increment numerical ID inside unicodes.txt, 
+    increments it by 1, and appends the newly found character layout entry.
+    """
+    next_id = 1  # Default fallback if the file is empty
+
+    # 1. Read file to extract the last valid ID index number
+    if os.path.exists(txt_path):
+        with open(txt_path, "r", encoding="utf-8") as f:
+            lines = f.readlines()
+            # Loop backward to find the last line containing text
+            for line in reversed(lines):
+                if line.strip():
+                    parts = line.split("\t")
+                    if parts[0].isdigit():
+                        next_id = int(parts[0]) + 1
+                        break
+
+    # 2. Append the target layout element to the text file
+    with open(txt_path, "a", encoding="utf-8") as f:
+        # Construct the layout structure with exact tab separators
+        new_line = f"{next_id}\t{character}\t{hex_str}\t{block_name}\n"
+        f.write(new_line)
+        
+    print(f"✨ Auto-discovered missing record added to tracking text: ID {next_id} -> {character} ({hex_str})")
+
+
+def get_character_coordinates(pdf_path="./unicode_charts/U2B820.pdf"):
     pdf_document = fitz.open(pdf_path)
     # 获取文件名（含扩展名）
     filename_with_ext = os.path.basename(pdf_path)  # "report.pdf"
@@ -156,8 +187,8 @@ def get_character_coordinates(pdf_path="./unicode_charts/U323B0.pdf"):
         if page_num < 1:
             continue
 
-        # if page_num >= 2:
-        #     break
+        if page_num != 73:
+            continue
 
         page = pdf_document.load_page(page_num)
 
@@ -186,6 +217,22 @@ def get_character_coordinates(pdf_path="./unicode_charts/U323B0.pdf"):
                         if x in unicode_x_list:
                             if span["text"] in unicodes:
                                 span["is_unicode"] = True
+                            else:
+                                new_unicode_text = span["text"].strip()
+                                if new_unicode_text:
+                                    # Convert the character to its clean U+XXXX Hex format
+                                    hex_str = f"U+{new_unicode_text}"
+                                    
+                                    # Call our helper function to append it cleanly
+                                    append_single_missing_unicode(
+                                        character=chr(int(new_unicode_text, 16)),
+                                        hex_str=hex_str, 
+                                        block_name="CJK Extension E"  # Adjust dynamically if necessary
+                                    )
+
+                                    unicodes = get_all_unicodes()
+                                    span["is_unicode"] = True
+
                         if not span["text"].strip():
                             if w > 18 and h > 19:
                                 pass
@@ -331,7 +378,7 @@ def get_character_coordinates(pdf_path="./unicode_charts/U323B0.pdf"):
             matrix = fitz.Matrix(scale_factor, scale_factor).prescale(2, 2)  # 2倍抗锯齿
 
             pix = page.get_pixmap(matrix=matrix, clip=coord["bbox"])
-            save_path = f"./unicode/{pdf_name}/{page_num}/"
+            save_path = f"./unicode_fix/{pdf_name}/{page_num}/"
             if not os.path.exists(save_path):
                 os.makedirs(
                     save_path, exist_ok=True
@@ -365,7 +412,7 @@ def get_chars():
     #     "U2F800",
     #     "U30000",
     # ]
-    list1 = ["U4E00"]
+    list1 = ["U2B820"]
     for li in list1:
         if li in ["U2E80", "U2F00", "U2FF0", "U31C0"]:
             continue

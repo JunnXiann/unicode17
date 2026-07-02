@@ -4,7 +4,7 @@ from tqdm import tqdm
 
 
 def resize_images_to_new_folder(
-    base_dir="./unicode", output_dir="./unicode_150", target_height=150
+    base_dir="./unicode_fix", output_dir="./unicode_fix_150", target_height=150
 ):
     """
     Finds all JPG images in base_dir, scales them proportionally to target_height,
@@ -64,5 +64,5 @@ def resize_images_to_new_folder(
 if __name__ == "__main__":
     # You can change these paths if your folders are located elsewhere
     resize_images_to_new_folder(
-        base_dir="./unicode", output_dir="./unicode_150", target_height=150
+        base_dir="./unicode_fix", output_dir="./unicode_fix_150", target_height=150
     )

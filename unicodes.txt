@@ -103363,3 +103363,19 @@
 103362	𳑷	U+33477	CJK Unified Ideographs Extension J
 103363	𳑸	U+33478	CJK Unified Ideographs Extension J
 103364	𳑹	U+33479	CJK Unified Ideographs Extension J
+103365	𫜼	U+2B73C	CJK Extension C
+103366	𫜽	U+2B73D	CJK Extension C
+103367	𫜾	U+2B73E	CJK Extension C
+103368	𫜿	U+2B73F	CJK Extension C
+103369	𬺤	U+2CEA4	CJK Extension E
+103370	𬺥	U+2CEA5	CJK Extension E
+103371	𬺦	U+2CEA6	CJK Extension E
+103372	𬺧	U+2CEA7	CJK Extension E
+103373	𬺨	U+2CEA8	CJK Extension E
+103374	𬺩	U+2CEA9	CJK Extension E
+103375	𬺪	U+2CEAA	CJK Extension E
+103376	𬺫	U+2CEAB	CJK Extension E
+103377	𬺬	U+2CEAC	CJK Extension E
+103378	𬺭	U+2CEAD	CJK Extension E
+103379	𬺢	U+2CEA2	CJK Extension E
+103380	𬺣	U+2CEA3	CJK Extension E
